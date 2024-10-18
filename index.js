@@ -8,6 +8,10 @@ import { Message } from './models/Message.js';
 dotenv.config();
 
 const app = express();
+
+// Enable trust proxy
+app.set('trust proxy', true);  // This will allow proxies
+
 app.use(bodyParser.json());
 
 // MongoDB connection
@@ -46,7 +50,7 @@ app.post('/webhook', async (req, res) => {
 
     changes.forEach(async (change) => {
       const messageData = change.value.messages;
-      
+
       if (messageData && messageData.length > 0) {
         const message = messageData[0];
         const from = message.from;  // Sender's WhatsApp ID
